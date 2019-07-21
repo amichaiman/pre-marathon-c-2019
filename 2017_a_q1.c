@@ -74,10 +74,22 @@ int is_legal_block(int board[][SIZE], int row, int col) {
     return 1;
 }
 
+int all_blocks_legal(int board[][SIZE]) {
+    int i, j;
+    for (i=0; i<SIZE; i+=3) {
+        for (j=0; j<SIZE; j+=3) {
+            if (!is_legal_block(board, i, j)) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
 int main() {
     int index;
     int board[][SIZE] = {
-        { 5, 6, 2, 1, 7, 3, 9, 8, 5 },
+        { 4, 6, 2, 1, 7, 3, 9, 8, 5 },
         { 1, 7, 3, 5, 8, 9, 4, 2, 6 },
         { 8, 5, 9, 2, 6, 4, 3, 7, 1 },
         { 2, 4, 6, 7, 9, 8, 1, 5, 3 },
@@ -89,16 +101,18 @@ int main() {
     };
     print_board(board);
 
-//    if ((index = all_rows_legal(board)) == -1) {
-//        puts("all rows are legal");
-//    } else {
-//        printf("index %d isn't legal\n", index);
-//    }
+    if ((index = all_rows_legal(board)) == -1) {
+        puts("all rows are legal");
+    } else {
+        printf("index %d isn't legal\n", index);
+    }
 
     puts("---------------------------------");
 
-    if (is_legal_block(board, 0, 0)) {
-        puts("block is legal");
+    if (all_blocks_legal(board)) {
+        puts("all blocks are legal");
+    } else {
+        puts("not all blocks are legal");
     }
     return 0;
 }
